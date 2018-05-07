@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * File: FinalProject.java
+ * Author: Team 6
+ * Class: CS 445 - Computer Graphics
+ * 
+ * Assignment: Final Project
+ * Date Last Modified: 5/6/2018
+ * Purpose: Create a basic Minecraft scene with random creation between each
+ *          run of the program.
+ ******************************************************************************/
+
 package finalproject;
 
 import static org.lwjgl.opengl.GL11.*;

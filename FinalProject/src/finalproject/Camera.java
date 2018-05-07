@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * File: Camera.java
+ * Author: Team 6
+ * Class: CS 445 - Computer Graphics
+ * 
+ * Assignment: Final Project
+ * Date Last Modified: 5/6/2018
+ * Purpose: Saves the location of the camera.
+ ******************************************************************************/
+
 package finalproject;
 
 public class Camera {

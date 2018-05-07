@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * File: FirstPersonCameraController.java
+ * Author: Team 6
+ * Class: CS 445 - Computer Graphics
+ * 
+ * Assignment: Final Project
+ * Date Last Modified: 5/6/2018
+ * Purpose: Modifies the location of the camera based on the input from the user
+ ******************************************************************************/
+
 package finalproject;
 
 import static org.lwjgl.opengl.GL11.*;

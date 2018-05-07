@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * File: FinalProject.java
+ * Author: Team 6
+ * Class: CS 445 - Computer Graphics
+ * 
+ * Assignment: Final Project
+ * Date Last Modified: 5/6/2018
+ * Purpose: Creates the window for the Minecraft scene to be displayed.
+ ******************************************************************************/
+
 package finalproject;
 
 import static org.lwjgl.opengl.GL11.*;
