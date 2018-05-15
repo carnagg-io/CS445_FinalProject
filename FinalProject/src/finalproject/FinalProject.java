@@ -85,12 +85,12 @@ public class FinalProject {
             Mouse.setGrabbed(true);
             
             Window window = new Window("Final Project", 640, 480);
-            FirstPersonCameraController controller = new FirstPersonCameraController(0, 0, 0, 0, 0);
+            FirstPersonCameraController controller = new FirstPersonCameraController(0, -90, 0, 0, 0);
             
             float mouseSensitivity = 0.09f;
             float movementSpeed = 0.35f;
             
-            Chunk chunk = new Chunk(-5, -5, -5);
+            Chunk chunk = new Chunk(-30, 90, -60);
             
             while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
                 controller.yaw(Mouse.getDX() * mouseSensitivity);

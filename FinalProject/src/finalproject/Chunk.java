@@ -28,12 +28,12 @@ public class Chunk {
     private float zInit;
     
     public Chunk(float xInit, float yInit, float zInit) {
-        Random r = new Random();try {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("C:/Users/CL4P-TP/Documents/NetBeansProjects/FinalProject/terrain.png"));
+        try {
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("C:\\Users\\Odious\\Documents\\GitHub\\CS445_FinalProject\\FinalProject\\terrain.png"));
         } catch (Exception e) {
             System.out.println("Texture Error");
         }
-        r = new Random();
+        Random r = new Random();
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
         for(int x = 0; x < CHUNK_SIZE; ++x){
             for(int y = 0; y < CHUNK_SIZE; ++y){
@@ -79,9 +79,7 @@ public class Chunk {
     }
     
     public void rebuildMesh(float xInit, float yInit, float zInit) {
-        Simplex simplex = new Simplex(32768, CHUNK_SIZE, CHUNK_SIZE);
-        simplex.smooth();
-        float[][] noise = simplex.noise();
+        SimplexNoise noise = new SimplexNoise(128, 0.5d, CHUNK_SIZE);
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
         VBOTextureHandle = glGenBuffers();
@@ -93,7 +91,8 @@ public class Chunk {
                 (CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE*6*12);
         for(float x = 0; x < CHUNK_SIZE; ++x){
             for(float z = 0; z < CHUNK_SIZE; ++z) {
-                float maxHeight = CHUNK_SIZE * noise[(int)x][(int)z];
+                float maxHeight = CHUNK_SIZE * (float)noise.getNoise((int)x, (int)z);
+                System.out.println(maxHeight);
                 for(float y = 0; y < maxHeight; ++y) {
                     VertexPositionData.put(createCube((float)(xInit+x*CUBE_LENGTH),
                         (float)(y*CUBE_LENGTH+(int)(CHUNK_SIZE*.8)),
@@ -390,14 +389,7 @@ public class Chunk {
             x + offset, y - offset, z};
     }
     
-    private float[] getCubeColor(Block block) {switch (block.ID()) {
-            case 1:
-                return new float[] {1, 0, 0};
-            case 2:
-                return new float[] {0, 1, 0};
-            case 3:
-                return new float[] {0, 0, 1};
-        }
-    return new float[] {1, 1, 1};
+    private float[] getCubeColor(Block block) {
+        return new float[] {1, 1, 1};
     }
 }
