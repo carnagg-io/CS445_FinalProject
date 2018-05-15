@@ -21,22 +21,19 @@ public class Chunk {
     private Block[][][] Blocks;
     private int VBOVertexHandle;
     private int VBOColorHandle;
+    private int VBOTextureHandle;
     private Texture texture;
     private float xInit;
     private float yInit;
     private float zInit;
     
     public Chunk(float xInit, float yInit, float zInit) {
-<<<<<<< HEAD
-        Random r = new Random();
-=======
-        try {
+        Random r = new Random();try {
             texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("C:/Users/CL4P-TP/Documents/NetBeansProjects/FinalProject/terrain.png"));
         } catch (Exception e) {
             System.out.println("Texture Error");
         }
         r = new Random();
->>>>>>> cbb7fb04350ce7ac8d259bf7311ed297cfae92da
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
         for(int x = 0; x < CHUNK_SIZE; ++x){
             for(int y = 0; y < CHUNK_SIZE; ++y){
@@ -393,9 +390,7 @@ public class Chunk {
             x + offset, y - offset, z};
     }
     
-    private float[] getCubeColor(Block block) {
-<<<<<<< HEAD
-        switch (block.ID()) {
+    private float[] getCubeColor(Block block) {switch (block.ID()) {
             case 1:
                 return new float[] {1, 0, 0};
             case 2:
@@ -403,8 +398,6 @@ public class Chunk {
             case 3:
                 return new float[] {0, 0, 1};
         }
-=======
->>>>>>> cbb7fb04350ce7ac8d259bf7311ed297cfae92da
-        return new float[] {1, 1, 1};
+    return new float[] {1, 1, 1};
     }
 }
