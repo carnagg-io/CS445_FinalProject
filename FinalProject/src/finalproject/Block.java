@@ -1,57 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package finalproject;
 
 public class Block {
-    private boolean IsActive;
-    private BlockType Type;
-    private float x,y,z;
     
-    public enum BlockType {
-        BlockType_Grass(0),
-        BlockType_Sand(1),
-        BlockType_Water(2),
-        BlockType_Dirt(3),
-        BlockType_Stone(4),
-        BlockType_Bedrock(5);
-        
-        private int BlockID;
-        
-        BlockType(int i) {
-            BlockID = i;
-        }
-        
-        public int GetID(){
-            return BlockID;
-        }
-        
-        public void SetID(int i){
-            BlockID = i;
-        }
+    private BlockType type;
+    private boolean active;
+    
+    private float x;
+    private float y;
+    private float z;
+    
+    public Block(BlockType type) {
+        this.type = type;
     }
     
-    public Block (BlockType type) {
-        Type = type;
-    }
+    public void ID(int ID) { type.ID(ID); }
+    public void type(BlockType type) { this.type = type; }
+    public void active(boolean active) { this.active = active; }
     
-    public void setCoords(float x, float y, float z){
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+    public void x(float x) { this.x = x; }
+    public void y(float y) { this.y = y; }
+    public void z(float z) { this.z = z; }
+    public void xyz(float x, float y, float z){ x(x); y(y); z(z); }
     
-    public boolean IsActive() {
-        return IsActive;
-    }
+    public int ID() { return type.ID(); }
+    public BlockType type() { return type; }
+    public boolean active() { return active; }
     
-    public void SetActive(boolean active) {
-        IsActive = active;
-    }
-    
-    public int GetID() {
-        return Type.GetID();
-    }
+    public float x() { return x; }
+    public float y() { return y; }
+    public float z() { return z; }
 }

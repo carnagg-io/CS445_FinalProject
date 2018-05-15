@@ -12,32 +12,35 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 
 public class Chunk {
+    
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
+    private Random r;
     private Block[][][] Blocks;
     private int VBOVertexHandle;
     private int VBOColorHandle;
-    private int StartX, StartY, StartZ;
-    private Random r;
+    private float xInit;
+    private float yInit;
+    private float zInit;
     
-    public Chunk(int startX, int startY, int startZ) {
+    public Chunk(float xInit, float yInit, float zInit) {
         r = new Random();
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
         for(int x = 0; x < CHUNK_SIZE; ++x){
             for(int y = 0; y < CHUNK_SIZE; ++y){
                 for(int z = 0; z < CHUNK_SIZE; ++z){
                     if(r.nextFloat()>0.7f){
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+                        Blocks[x][y][z] = new Block(BlockType.GRASS);
                     } else if (r.nextFloat()>0.6f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Dirt);
+                        Blocks[x][y][z] = new Block(BlockType.DIRT);
                     } else if (r.nextFloat()>0.5f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
+                        Blocks[x][y][z] = new Block(BlockType.WATER);
                     } else if (r.nextFloat()>0.4f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Stone);
+                        Blocks[x][y][z] = new Block(BlockType.STONE);
                     } else if (r.nextFloat()>0.3f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Bedrock);
+                        Blocks[x][y][z] = new Block(BlockType.BEDROCK);
                     } else {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Sand);
+                        Blocks[x][y][z] = new Block(BlockType.SAND);
                     }
                 }
             }
@@ -45,24 +48,24 @@ public class Chunk {
         
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
-        StartX = startX;
-        StartY = startY;
-        StartZ = startZ;
-        rebuildMesh(startX, startY, startZ);
+        this.xInit = xInit;
+        this.yInit = yInit;
+        this.zInit = zInit;
+        rebuildMesh(xInit, yInit, zInit);
     }
     
     public void render() {
         glPushMatrix();
-          glPushMatrix();
-          glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
-          glVertexPointer(3, GL_FLOAT, 0, 0L);
-          glBindBuffer(GL_ARRAY_BUFFER, VBOColorHandle);
-          glColorPointer(3, GL_FLOAT, 0, 0L);
-          glDrawArrays(GL_QUADS, 0, CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE*24);
+        glPushMatrix();
+        glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
+        glVertexPointer(3, GL_FLOAT, 0, 0L);
+        glBindBuffer(GL_ARRAY_BUFFER, VBOColorHandle);
+        glColorPointer(3, GL_FLOAT, 0, 0L);
+        glDrawArrays(GL_QUADS, 0, CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE*24);
         glPopMatrix();
     }
     
-    public void rebuildMesh(float startX, float startY, float startZ) {
+    public void rebuildMesh(float xInit, float yInit, float zInit) {
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
         FloatBuffer VertexPositionData = BufferUtils.createFloatBuffer
@@ -72,10 +75,10 @@ public class Chunk {
         for(float x = 0; x < CHUNK_SIZE; ++x){
             for(float z = 0; z < CHUNK_SIZE; ++z) {
                 for(float y = 0; y < CHUNK_SIZE; ++y) {
-                    VertexPositionData.put(createCube((float)(startX+x*CUBE_LENGTH),
+                    VertexPositionData.put(createCube((float)(xInit+x*CUBE_LENGTH),
                         (float)(y*CUBE_LENGTH+(int)(CHUNK_SIZE*.8)),
-                        (float) (startZ + z *CUBE_LENGTH)));
-                    VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int) x][(int) y][(int) z])));
+                        (float) (zInit + z *CUBE_LENGTH)));
+                    VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int)x][(int)y][(int)z])));
                 }
             }
         }
@@ -133,7 +136,7 @@ public class Chunk {
     }
     
     private float[] getCubeColor(Block block) {
-        switch (block.GetID()) {
+        switch (block.ID()) {
             case 1:
                 return new float[] {0, 1, 0};
             case 2:
@@ -141,7 +144,7 @@ public class Chunk {
             case 3:
                 return new float[] {0, 0f, 1f};
         }
-        return new float[] {1, 1, 1};
+        return new float[] {1, 0, 0};
     }
     
     

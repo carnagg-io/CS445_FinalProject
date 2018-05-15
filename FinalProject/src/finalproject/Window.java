@@ -50,6 +50,9 @@ public class Window {
         GLU.gluPerspective(100, (float)mode.getWidth()/(float)mode.getHeight(), 0.1f, 300);
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnable(GL_DEPTH_TEST);
     }
     
     private DisplayMode mode() {
