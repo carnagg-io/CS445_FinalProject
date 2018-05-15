@@ -90,7 +90,7 @@ public class FinalProject {
             float mouseSensitivity = 0.09f;
             float movementSpeed = 0.35f;
             
-            Chunk chunk = new Chunk(0, 0, 0);
+            Chunk chunk = new Chunk(-5, -5, -5);
             
             while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
                 controller.yaw(Mouse.getDX() * mouseSensitivity);
@@ -112,9 +112,9 @@ public class FinalProject {
                 glLoadIdentity();
                 controller.look();
                 glEnable(GL_DEPTH_TEST);
-                //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 // drawCube(50);
-                chunk.rebuildMesh(0, 0, 0);
+                //chunk.rebuildMesh(0, 0, 0);
                 chunk.render();
                 
                 Display.update();
