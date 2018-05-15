@@ -111,10 +111,14 @@ public class FinalProject {
                 
                 glLoadIdentity();
                 controller.look();
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_COLOR_ARRAY);
+                glEnable(GL_TEXTURE_2D);
+                glEnableClientState(GL_TEXTURE_COORD_ARRAY);
                 glEnable(GL_DEPTH_TEST);
-                //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                // drawCube(50);
-                chunk.rebuildMesh(0, 0, 0);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                //drawCube(50);
+                //chunk.rebuildMesh(0, 0, 0);
                 chunk.render();
                 
                 Display.update();
