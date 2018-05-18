@@ -88,7 +88,7 @@ public class FinalProject {
             FirstPersonCameraController controller = new FirstPersonCameraController(0, -90, 0, 0, 0);
             
             float mouseSensitivity = 0.09f;
-            float movementSpeed = 0.35f;
+            float movementSpeed = 0.7f;
             
             Chunk chunk = new Chunk(-30, 90, -60);
             

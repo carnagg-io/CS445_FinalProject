@@ -32,16 +32,14 @@ public class Chunk {
         try {
             texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("C:\\Users\\CL4P-TP\\Documents\\NetBeansProjects\\FinalProject\\FinalProject\\terrain.png"));
         } catch (Exception e) {
-            System.out.println("Texture Error");
+            System.out.println("terrain.png file is not referenced correctly.\nChange file path in Chunk class");
         }
         Random r = new Random();
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
         for(int x = 0; x < CHUNK_SIZE; ++x){
             for(int z = 0; z < CHUNK_SIZE; ++z){
                 for(int y = 0; y < CHUNK_SIZE; ++y){
-                    if((int)noise.getHeightAt(x, z) == y)
-                        Blocks[x][y][z] = new Block(BlockType.GRASS);
-                    else if(((int)noise.getHeightAt(x, z)-2) <= y)
+                    if(((int)noise.getHeightAt(x, z)-2) <= y)
                         Blocks[x][y][z] = new Block(BlockType.DIRT);
                     else {
                         if (r.nextFloat()>0.8f)
@@ -49,6 +47,9 @@ public class Chunk {
                         else
                             Blocks[x][y][z] = new Block(BlockType.STONE);
                     }
+                    
+                    if ((int)noise.getHeightAt(x, z) <= y)
+                        Blocks[x][y][z] = new Block(BlockType.GRASS);
                     
                     if(y == 0)
                         Blocks[x][y][z] = new Block(BlockType.BEDROCK);
@@ -91,7 +92,7 @@ public class Chunk {
                 (CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE*6*12);
         for(float x = 0; x < CHUNK_SIZE; ++x){
             for(float z = 0; z < CHUNK_SIZE; ++z) {
-                for(float y = 0; y < noise.getHeightAt((int)x, (int)z); ++y) {
+                for(float y = 0; y <= noise.getHeightAt((int)x, (int)z); ++y) {
                     VertexPositionData.put(createCube((float)(xInit+x*CUBE_LENGTH),
                         (float)(y*CUBE_LENGTH+(int)(CHUNK_SIZE*.8)),
                         (float) (zInit + z *CUBE_LENGTH)));
