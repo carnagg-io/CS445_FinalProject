@@ -18,6 +18,7 @@ public class Chunk {
     
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
+    private Simplex noise = new Simplex(27, 0.07d, CHUNK_SIZE);
     private Block[][][] Blocks;
     private int VBOVertexHandle;
     private int VBOColorHandle;
@@ -29,28 +30,28 @@ public class Chunk {
     
     public Chunk(float xInit, float yInit, float zInit) {
         try {
-            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("C:\\Users\\Odious\\Documents\\GitHub\\CS445_FinalProject\\FinalProject\\terrain.png"));
+            texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("C:\\Users\\CL4P-TP\\Documents\\NetBeansProjects\\FinalProject\\FinalProject\\terrain.png"));
         } catch (Exception e) {
             System.out.println("Texture Error");
         }
         Random r = new Random();
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
         for(int x = 0; x < CHUNK_SIZE; ++x){
-            for(int y = 0; y < CHUNK_SIZE; ++y){
-                for(int z = 0; z < CHUNK_SIZE; ++z){
-                    if(r.nextFloat()>0.7f){
+            for(int z = 0; z < CHUNK_SIZE; ++z){
+                for(int y = 0; y < CHUNK_SIZE; ++y){
+                    if((int)noise.getHeightAt(x, z) == y)
                         Blocks[x][y][z] = new Block(BlockType.GRASS);
-                    } else if (r.nextFloat()>0.6f) {
+                    else if(((int)noise.getHeightAt(x, z)-2) <= y)
                         Blocks[x][y][z] = new Block(BlockType.DIRT);
-                    } else if (r.nextFloat()>0.5f) {
-                        Blocks[x][y][z] = new Block(BlockType.WATER);
-                    } else if (r.nextFloat()>0.4f) {
-                        Blocks[x][y][z] = new Block(BlockType.STONE);
-                    } else if (r.nextFloat()>0.3f) {
-                        Blocks[x][y][z] = new Block(BlockType.BEDROCK);
-                    } else {
-                        Blocks[x][y][z] = new Block(BlockType.SAND);
+                    else {
+                        if (r.nextFloat()>0.8f)
+                            Blocks[x][y][z] = new Block(BlockType.DIRT);
+                        else
+                            Blocks[x][y][z] = new Block(BlockType.STONE);
                     }
+                    
+                    if(y == 0)
+                        Blocks[x][y][z] = new Block(BlockType.BEDROCK);
                 }
             }
         }
@@ -79,7 +80,6 @@ public class Chunk {
     }
     
     public void rebuildMesh(float xInit, float yInit, float zInit) {
-        SimplexNoise noise = new SimplexNoise(128, 0.5d, CHUNK_SIZE);
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
         VBOTextureHandle = glGenBuffers();
@@ -91,9 +91,7 @@ public class Chunk {
                 (CHUNK_SIZE*CHUNK_SIZE*CHUNK_SIZE*6*12);
         for(float x = 0; x < CHUNK_SIZE; ++x){
             for(float z = 0; z < CHUNK_SIZE; ++z) {
-                float maxHeight = CHUNK_SIZE * (float)noise.getNoise((int)x, (int)z);
-                System.out.println(maxHeight);
-                for(float y = 0; y < maxHeight; ++y) {
+                for(float y = 0; y < noise.getHeightAt((int)x, (int)z); ++y) {
                     VertexPositionData.put(createCube((float)(xInit+x*CUBE_LENGTH),
                         (float)(y*CUBE_LENGTH+(int)(CHUNK_SIZE*.8)),
                         (float) (zInit + z *CUBE_LENGTH)));
