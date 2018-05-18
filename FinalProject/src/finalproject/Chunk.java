@@ -18,7 +18,7 @@ public class Chunk {
     
     static final int CHUNK_SIZE = 30;
     static final int CUBE_LENGTH = 2;
-    private Simplex noise = new Simplex(27, 0.07d, CHUNK_SIZE);
+    private Simplex noise = new Simplex(27, 0.04d, CHUNK_SIZE);
     private Block[][][] Blocks;
     private int VBOVertexHandle;
     private int VBOColorHandle;

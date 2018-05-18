@@ -11,9 +11,9 @@ public class Simplex {
     
     private float[][] maxHeights;
     
-    public Simplex(int largestFeature,double persistence, int chunkSize) {
+    public Simplex(int largestFeature, double persistence, int chunkSize) {
         Random rand = new Random();
-        SimplexNoise noise = new SimplexNoise(27, 0.07d, rand.nextInt());
+        SimplexNoise noise = new SimplexNoise(largestFeature, persistence, rand.nextInt());
         maxHeights = new float[chunkSize][chunkSize];
         
         for(int x = 0; x < chunkSize; ++x){
