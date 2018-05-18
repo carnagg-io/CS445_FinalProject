@@ -44,7 +44,7 @@ public class Window {
     }
     
     private void initializeGL() {
-        glClearColor(0, 0, 0, 0);
+        glClearColor(0.5f, 0.8f, 1f, 0);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         GLU.gluPerspective(100, (float)mode.getWidth()/(float)mode.getHeight(), 0.1f, 300);
