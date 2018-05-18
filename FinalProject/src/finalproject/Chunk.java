@@ -57,6 +57,35 @@ public class Chunk {
             }
         }
         
+        int[][] coordinates = noise.findLakeLocation();
+        for(int i = 0; i < coordinates.length; ++i)
+            Blocks[coordinates[i][0]][(int)noise.getHeightAt(coordinates[i][0],coordinates[i][1])][coordinates[i][1]] = new Block(BlockType.WATER);
+        
+        for(int x = 0; x < CHUNK_SIZE; ++x){
+            for(int z = 0; z < CHUNK_SIZE; ++z){
+                if(Blocks[x][(int)noise.getHeightAt(x, z)][z].type() == BlockType.WATER){
+                    if(Blocks[x+1][(int)noise.getHeightAt(x+1, z)][z].type() != BlockType.WATER)
+                        Blocks[x+1][(int)noise.getHeightAt(x+1, z)][z] = new Block(BlockType.SAND);
+                    if(Blocks[x-1][(int)noise.getHeightAt(x-1, z)][z].type() != BlockType.WATER)
+                        Blocks[x-1][(int)noise.getHeightAt(x-1, z)][z] = new Block(BlockType.SAND);
+                    if(Blocks[x][(int)noise.getHeightAt(x, z+1)][z+1].type() != BlockType.WATER)
+                        Blocks[x][(int)noise.getHeightAt(x, z+1)][z+1] = new Block(BlockType.SAND);
+                    if(Blocks[x][(int)noise.getHeightAt(x, z-1)][z-1].type() != BlockType.WATER)
+                        Blocks[x][(int)noise.getHeightAt(x, z-1)][z-1] = new Block(BlockType.SAND);
+                    
+                    if(Blocks[x-1][(int)noise.getHeightAt(x-1, z-1)][z-1].type() != BlockType.WATER)
+                        Blocks[x-1][(int)noise.getHeightAt(x-1, z-1)][z-1] = new Block(BlockType.SAND);
+                    if(Blocks[x+1][(int)noise.getHeightAt(x+1, z-1)][z-1].type() != BlockType.WATER)
+                        Blocks[x+1][(int)noise.getHeightAt(x+1, z-1)][z-1] = new Block(BlockType.SAND);
+                    if(Blocks[x-1][(int)noise.getHeightAt(x-1, z+1)][z+1].type() != BlockType.WATER)
+                        Blocks[x-1][(int)noise.getHeightAt(x-1, z+1)][z+1] = new Block(BlockType.SAND);
+                    if(Blocks[x+1][(int)noise.getHeightAt(x+1, z+1)][z+1].type() != BlockType.WATER)
+                        Blocks[x+1][(int)noise.getHeightAt(x+1, z+1)][z+1] = new Block(BlockType.SAND);
+                    
+                }
+            }
+        }
+        
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
         VBOTextureHandle = glGenBuffers();
